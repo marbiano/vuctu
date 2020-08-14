@@ -11,8 +11,23 @@ interface PageProps {
 
 const ProductPage: React.FC<PageProps> = ({ product }) => {
   const router = useRouter();
+  const { query, isFallback } = router;
+  const { slug } = query;
+  const [status, setStatus] = useState<string>();
 
-  if (router.isFallback) {
+  useEffect(() => {
+    async function fetchProduct() {
+      const newProduct = await fetchProductBySlug(
+        Array.isArray(slug) ? slug[0] : slug,
+      );
+
+      setStatus(newProduct.fields.status);
+    }
+
+    if (slug && !isFallback) fetchProduct();
+  }, [slug, isFallback]);
+
+  if (isFallback) {
     return <div>Loading...</div>;
   }
 
@@ -25,7 +40,13 @@ const ProductPage: React.FC<PageProps> = ({ product }) => {
   return (
     <div>
       <h1>{fields.title}</h1>
-      <div>{fields.status === 'available' ? 'Available' : 'Not Available'}</div>
+      <div>
+        {status
+          ? status === 'available'
+            ? 'Available'
+            : 'Not Available'
+          : 'Loading status...'}
+      </div>
     </div>
   );
 };
@@ -35,6 +56,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const product = await fetchProductBySlug(
     Array.isArray(slug) ? slug[0] : slug,
   );
+
   return {
     props: {
       product,
