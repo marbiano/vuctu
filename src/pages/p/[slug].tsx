@@ -1,10 +1,18 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { fetchProductBySlug } from '../../lib/api';
 import DefaultErrorPage from 'next/error';
+import { fetchProductBySlug } from '../../lib/api';
+import { Product } from '../../lib/types';
 
-export default function Product() {
-  const [product, setProduct] = useState();
+interface PageProps {
+  loading: boolean;
+  product?: Product;
+}
+
+const ProductPage: React.FC = () => {
+  const [props, setProps] = useState<PageProps>({
+    loading: true,
+  });
   const router = useRouter();
   const { slug } = router.query;
 
@@ -13,21 +21,26 @@ export default function Product() {
       const newProduct = await fetchProductBySlug(
         Array.isArray(slug) ? slug[0] : slug,
       );
-      setProduct(newProduct);
+      setProps({
+        loading: false,
+        product: newProduct,
+      });
     }
 
     if (slug) fetchProduct();
   }, [slug]);
 
-  // Product is loading
-  if (!product) {
+  const { loading, product } = props;
+
+  if (loading) {
     return <div>Loading...</div>;
   }
 
-  // Product doesn't exist
-  if (product.error === 404) {
-    return <DefaultErrorPage statusCode={product.error} />;
+  if (!product) {
+    return <DefaultErrorPage statusCode={404} />;
   }
 
-  return <div>{product.title}</div>;
-}
+  return <div>{product.fields.title}</div>;
+};
+
+export default ProductPage;

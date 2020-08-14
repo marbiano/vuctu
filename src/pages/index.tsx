@@ -1,20 +1,34 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { fetchAllProducts } from '../lib/api';
+import { Product } from '../lib/types';
 
-export default function Home() {
-  const [products, setProducts] = useState();
+interface PageProps {
+  loading: boolean;
+  products: Product[];
+}
+
+const IndexPage: React.FC = () => {
+  const [props, setProps] = useState<PageProps>({
+    loading: true,
+    products: [],
+  });
 
   useEffect(() => {
     async function fetchProducts() {
       const newProducts = await fetchAllProducts();
-      setProducts(newProducts);
+      setProps({
+        loading: false,
+        products: newProducts,
+      });
     }
 
     fetchProducts();
   }, []);
 
-  if (!products) {
+  const { loading, products } = props;
+
+  if (loading) {
     return <div>Loading...</div>;
   }
 
@@ -24,13 +38,15 @@ export default function Home() {
 
   return (
     <ul>
-      {products.map((product) => (
-        <li key={product.slug}>
-          <Link href={`/p/${product.slug}`}>
-            <a>{product.title}</a>
+      {products.map(({ id, fields }) => (
+        <li key={id}>
+          <Link href={`/p/${fields.slug}`}>
+            <a>{fields.title}</a>
           </Link>
         </li>
       ))}
     </ul>
   );
-}
+};
+
+export default IndexPage;
