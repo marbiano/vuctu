@@ -40,7 +40,7 @@ export async function fetchAllProducts() {
 
 export async function fetchProductBySlug(slug: string) {
   const data: Data = await fetchAPI({
-    filterByFormula: `AND({slug} = '${slug}', {status} = 'available')`,
+    filterByFormula: `AND({slug} = '${slug}', OR({status} = 'available', {status} = 'sold'))`,
   });
 
   return data?.records.length > 0 ? data.records[0] : null;

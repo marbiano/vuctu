@@ -20,7 +20,14 @@ const ProductPage: React.FC<PageProps> = ({ product }) => {
     return <DefaultErrorPage statusCode={404} />;
   }
 
-  return <div>{product.fields.title}</div>;
+  const { fields } = product;
+
+  return (
+    <div>
+      <h1>{fields.title}</h1>
+      <div>{fields.status === 'available' ? 'Available' : 'Not Available'}</div>
+    </div>
+  );
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
