@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { fetchAllProducts } from '../lib/airtable';
+import { fetchAllProducts } from '../lib/api';
 
 export default function Home() {
   const [products, setProducts] = useState();

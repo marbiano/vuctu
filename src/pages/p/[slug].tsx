@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { fetchProductBySlug } from '../../lib/airtable';
+import { fetchProductBySlug } from '../../lib/api';
 import DefaultErrorPage from 'next/error';
 
 export default function Product() {
