@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { useRouter } from 'next/router';
 import DefaultErrorPage from 'next/error';
+import { useQuery } from 'react-query';
 import { fetchAllProducts, fetchProductBySlug } from '../../lib/api';
 import { Product } from '../../lib/types';
 
@@ -12,20 +13,11 @@ interface PageProps {
 const ProductPage: React.FC<PageProps> = ({ product }) => {
   const router = useRouter();
   const { query, isFallback } = router;
-  const { slug } = query;
-  const [status, setStatus] = useState<string>();
+  const slug = Array.isArray(query.slug) ? query.slug[0] : query.slug;
 
-  useEffect(() => {
-    async function fetchProduct() {
-      const newProduct = await fetchProductBySlug(
-        Array.isArray(slug) ? slug[0] : slug,
-      );
-
-      setStatus(newProduct.fields.status);
-    }
-
-    if (slug && !isFallback) fetchProduct();
-  }, [slug, isFallback]);
+  const { isLoading, error, data } = useQuery(['product', slug], (key, slug) =>
+    fetchProductBySlug(slug),
+  );
 
   if (isFallback) {
     return <div>Loading...</div>;
@@ -41,11 +33,11 @@ const ProductPage: React.FC<PageProps> = ({ product }) => {
     <div>
       <h1>{fields.title}</h1>
       <div>
-        {status
-          ? status === 'available'
-            ? 'Available'
-            : 'Not Available'
-          : 'Loading status...'}
+        {isLoading
+          ? 'Loading status...'
+          : data.fields.status === 'available'
+          ? 'Available'
+          : 'Not Available'}
       </div>
     </div>
   );
