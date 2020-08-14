@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { GetStaticProps, GetStaticPaths } from 'next';
+import { useRouter } from 'next/router';
 import DefaultErrorPage from 'next/error';
 import { fetchAllProducts, fetchProductBySlug } from '../../lib/api';
 import { Product } from '../../lib/types';
@@ -9,6 +10,12 @@ interface PageProps {
 }
 
 const ProductPage: React.FC<PageProps> = ({ product }) => {
+  const router = useRouter();
+
+  if (router.isFallback) {
+    return <div>Loading...</div>;
+  }
+
   if (!product) {
     return <DefaultErrorPage statusCode={404} />;
   }
@@ -34,7 +41,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     paths: products.map((product) => ({
       params: { slug: product.fields.slug },
     })),
-    fallback: false,
+    fallback: true,
   };
 };
 
