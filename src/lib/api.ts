@@ -1,18 +1,13 @@
 import { Product } from '../lib/types';
 
 const AIRTABLE_API_URL = `https://api.airtable.com/v0`;
-const AIRTABLE_BASE_ID =
-  process.env.AIRTABLE_BASE_ID || process.env.NEXT_PUBLIC_AIRTABLE_BASE_ID;
-const AIRTABLE_TABLE_NAME =
-  process.env.AIRTABLE_TABLE_NAME ||
-  process.env.NEXT_PUBLIC_AIRTABLE_TABLE_NAME;
-const AIRTABLE_API_KEY =
-  process.env.AIRTABLE_API_KEY || process.env.NEXT_PUBLIC_AIRTABLE_API_KEY;
+const { AIRTABLE_BASE_ID, AIRTABLE_TABLE_NAME, AIRTABLE_API_KEY } = process.env;
 const AIRTABLE_ENDPOINT = `${AIRTABLE_API_URL}/${AIRTABLE_BASE_ID}/${AIRTABLE_TABLE_NAME}`;
 
 interface Data {
   records: Product[];
 }
+
 async function fetchAPI(params = {}) {
   const res = await fetch(
     `${AIRTABLE_ENDPOINT}?${new URLSearchParams(params).toString()}`,

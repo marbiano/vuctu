@@ -16,7 +16,7 @@ const ProductPage: React.FC<PageProps> = ({ product }) => {
   const slug = Array.isArray(query.slug) ? query.slug[0] : query.slug;
 
   const { isLoading, error, data } = useQuery(['product', slug], (key, slug) =>
-    fetchProductBySlug(slug),
+    fetch(`/api/p/${slug}`).then((res) => res.json()),
   );
 
   if (isFallback) {
@@ -28,14 +28,13 @@ const ProductPage: React.FC<PageProps> = ({ product }) => {
   }
 
   const { fields } = product;
-
   return (
     <div>
       <h1>{fields.title}</h1>
       <div>
         {isLoading
           ? 'Loading status...'
-          : data.fields.status === 'available'
+          : data.status === 'available'
           ? 'Available'
           : 'Not Available'}
       </div>
