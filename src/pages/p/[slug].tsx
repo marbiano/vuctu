@@ -30,8 +30,8 @@ const ProductPage: React.FC<PageProps> = ({ product }) => {
   const { fields } = product;
   return (
     <Layout>
-      <div className="grid grid-cols-3 gap-8">
-        <div className="col-span-1">
+      <div className="grid grid-cols-9 gap-8">
+        <div className="col-span-2">
           <h1>{fields.title}</h1>
           <div>
             {isLoading
@@ -41,7 +41,7 @@ const ProductPage: React.FC<PageProps> = ({ product }) => {
               : 'Not Available'}
           </div>
         </div>
-        <div className="col-span-2">
+        <div className="col-span-7">
           <img src={fields.media[0].url} />
         </div>
       </div>
