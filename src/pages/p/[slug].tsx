@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { useRouter } from 'next/router';
 import DefaultErrorPage from 'next/error';
 import { useQuery } from 'react-query';
 import { fetchAllProducts, fetchProductBySlug } from '../../lib/api';
 import { Product } from '../../lib/types';
+import Layout from '../../components/Layout';
 
 interface PageProps {
   product?: Product;
@@ -29,16 +29,23 @@ const ProductPage: React.FC<PageProps> = ({ product }) => {
 
   const { fields } = product;
   return (
-    <div>
-      <h1>{fields.title}</h1>
-      <div>
-        {isLoading
-          ? 'Loading status...'
-          : data.status === 'available'
-          ? 'Available'
-          : 'Not Available'}
+    <Layout>
+      <div className="grid grid-cols-3 gap-8">
+        <div className="col-span-1">
+          <h1>{fields.title}</h1>
+          <div>
+            {isLoading
+              ? 'Loading status...'
+              : data.status === 'available'
+              ? 'Available'
+              : 'Not Available'}
+          </div>
+        </div>
+        <div className="col-span-2">
+          <img src={fields.media[0].url} />
+        </div>
       </div>
-    </div>
+    </Layout>
   );
 };
 

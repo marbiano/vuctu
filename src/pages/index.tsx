@@ -2,6 +2,8 @@ import { GetStaticProps } from 'next';
 import Link from 'next/link';
 import { fetchAllProducts } from '../lib/api';
 import { Product } from '../lib/types';
+import ProductsGrid from '../components/ProductsGrid';
+import Layout from '../components/Layout';
 
 interface PageProps {
   products: Product[];
@@ -13,15 +15,9 @@ const IndexPage: React.FC<PageProps> = ({ products }) => {
   }
 
   return (
-    <ul>
-      {products.map(({ id, fields }) => (
-        <li key={id}>
-          <Link href={`/p/${fields.slug}`}>
-            <a>{fields.title}</a>
-          </Link>
-        </li>
-      ))}
-    </ul>
+    <Layout>
+      <ProductsGrid products={products} />
+    </Layout>
   );
 };
 
