@@ -52,7 +52,9 @@ const ProductPage: React.FC<PageProps> = ({ product }) => {
               </a>
             </div>
             <div className="mt-4">
-              {isLoading ? null : data.status === 'available' ? (
+              {isLoading ? (
+                <div className="animate-pulse h-12 bg-gray-400 w-full" />
+              ) : data.status === 'available' ? (
                 <a
                   href={fields.reference}
                   target="_blank"
