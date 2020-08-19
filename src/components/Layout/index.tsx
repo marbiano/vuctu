@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { motion } from 'framer-motion';
 import Sidebar from '../Sidebar';
 
@@ -14,7 +13,6 @@ const Layout: React.FC = ({ children }) => {
             transition={{ duration: 0.15, ease: 'easeOut' }}
             initial="pageInitial"
             animate="pageAnimate"
-            exit="pageInitial"
             variants={{
               pageInitial: {
                 opacity: 0,

@@ -1,5 +1,4 @@
 import { AppProps } from 'next/app';
-import { AnimatePresence } from 'framer-motion';
 import '../styles/index.css';
 
 const MyApp: React.FC<AppProps> = ({
@@ -7,11 +6,7 @@ const MyApp: React.FC<AppProps> = ({
   pageProps,
   router,
 }: AppProps) => {
-  return (
-    <AnimatePresence exitBeforeEnter>
-      <Component {...pageProps} key={router.route} />;
-    </AnimatePresence>
-  );
+  return <Component {...pageProps} key={router.route} />;
 };
 
 export default MyApp;
