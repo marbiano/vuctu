@@ -16,6 +16,9 @@ interface Fields {
   media: Media[];
   status: string;
   user: string;
+  description: string;
+  reference: string;
+  sort: number;
 }
 
 export interface Product {

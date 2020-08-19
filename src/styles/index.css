@@ -1,3 +1,91 @@
 @tailwind base;
 @tailwind components;
+
+.btn-oranged {
+  @apply block uppercase bg-oranged text-white text-center py-3 px-1 tracking-wider;
+  position: relative;
+}
+
+.btn-oranged:before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: 1px solid theme('colors.oranged-black');
+  position: absolute;
+  top: 0.33em;
+  left: 0.33em;
+  z-index: -1;
+}
+
+.btn-oranged:hover {
+  background: theme('colors.oranged-black');
+  transition: background 150ms ease-out;
+}
+
+.btn-oranged:focus {
+  transform: translate(0.33em, 0.33em);
+  transition: transform 50ms ease-out;
+  background: theme('colors.oranged-black');
+}
+
+.btn-oranged:focus:before {
+  top: 0;
+  left: 0;
+}
+
+.btn-black {
+  @apply block uppercase bg-oranged-black text-white text-center py-3 px-1 tracking-wider;
+  position: relative;
+}
+
+.btn-black:before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: 1px solid theme('colors.oranged-black');
+  position: absolute;
+  top: 0.33em;
+  left: 0.33em;
+  z-index: -1;
+}
+
+.btn-black:hover {
+  background: theme('colors.gray.800');
+  transition: background 150ms ease-out;
+}
+
+.btn-black:focus {
+  transform: translate(0.33em, 0.33em);
+  transition: transform 50ms ease-out;
+  background: theme('colors.oranged-black');
+}
+
+.btn-black:focus:before {
+  top: 0;
+  left: 0;
+}
+
+.btn-disabled {
+  @apply block uppercase bg-white text-gray-600 text-center py-3 px-1 tracking-wider;
+  border: 1px solid theme('colors.text-gray-600');
+  position: relative;
+}
+
+.btn-disabled:before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: 1px solid theme('colors.text-gray-200');
+  position: absolute;
+  top: 0.33em;
+  left: 0.33em;
+  z-index: -1;
+}
+
 @tailwind utilities;

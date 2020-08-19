@@ -10,7 +10,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   );
 
   if (!product) res.status(404);
-  res.status(200).json({ status: product.fields.status });
+  res.status(200).json({ status: product?.fields.status });
 };
 
 export default handler;

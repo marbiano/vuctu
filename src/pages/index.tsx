@@ -25,7 +25,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const products = await fetchAllProducts();
   return {
     props: {
-      products,
+      products: products.sort((a, b) => a.fields.sort - b.fields.sort),
     },
     revalidate: 1,
   };

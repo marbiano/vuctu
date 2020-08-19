@@ -4,7 +4,16 @@ module.exports = {
     './src/pages/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
-    extend: {},
+    fontFamily: {
+      sans: ['Inter', 'sans-serif'],
+      display: ['Arvo', 'sans-serif'],
+    },
+    extend: {
+      colors: {
+        oranged: '#ed4c38',
+        'oranged-black': '#181717',
+      },
+    },
   },
   variants: {},
   plugins: [],

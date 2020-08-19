@@ -4,7 +4,7 @@ import styles from './styles.module.css';
 
 const ProductsGrid: React.FC<{ products: Product[] }> = ({ products }) => {
   return (
-    <ul className="grid grid-cols-3 gap-8 row-gap-16">
+    <ul className="grid grid-cols-3 gap-8 row-gap-16 mt-32">
       {products.map(({ id, fields }) => (
         <li key={id}>
           <Link href={`/p/${fields.slug}`}>
@@ -15,7 +15,7 @@ const ProductsGrid: React.FC<{ products: Product[] }> = ({ products }) => {
                   src={fields.media[0].url}
                 />
               </div>
-              <div className="mt-4 text-gray-600">{fields.title}</div>
+              <div className="mt-4 text-gray-700">{fields.title}</div>
               <div>${fields.price}</div>
             </a>
           </Link>
